@@ -1,11 +1,85 @@
 ---
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
+import luisDavidPhoto from '../assets/img/luis-david-photo-anime.jpg';
+import Bagde from '../components/Badge.astro';
+import LinkedInIcon from '../assets/icons/LinkedIn.astro';
+import GithubIcon from '../assets/icons/GitHub.astro';
+import MailIcon from '../assets/icons/Mail.astro';
+import CodeIcon from '../assets/icons/Code.astro';
+import SocialPill from '../components/SocialPill.astro';
+import Experience from '../components/Experience.astro';
+import SectionContainer from '../components/SectionContainer.astro';
+import Briefcase from '../assets/icons/Briefcase.astro';
+import Projects from '../components/Projects.astro';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Luis David Portfolio - Software Engineer Developer | Web | Mobile"
+		description='Luis David Diaz - Software Engineer, Web and Mobile Developer. Passionate about technology and innovation. Welcome to my portfolio!'
+>
+  <main class="px-4 w-full">
+	<SectionContainer id="top" 
+		class={`
+		py-20 pb-10 
+		flex flex-col items-center justify-center
+		md:items-start md:justify-start
+		sm:max-w-full `} >
+		<img src={luisDavidPhoto.src}
+		class="rounded-full size-[140px] object-cover my-4 align-middle"
+		alt="Luis David photo" />
+		<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold pb-6 lg:pb-10">Welcome to My Portfolio</h1>
+		<h2 class="mt-4 w-[350px] md:w-full max-w-[700px] text-xl lg:text-2xl text-white font-bold flex flex-row gap-x-1 md:gap-x-4 pb-5">
+			I'm Luis David, a passionate developer.
+			<a
+				href="https://www.linkedin.com/in/ldavidiaz/"
+				class="inline-flex items-center px-3 py-1 text-sm font-medium bg-[#00651a] rounded-full"
+				aria-label="Available for work"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				<Bagde>Ready to work</Bagde>
+			</a>
+		</h2>
+		<nav class="flex flex-row flex-wrap gap-4 mb-4 opacity-90">
+			<SocialPill href="https://www.linkedin.com/in/ldavidiaz/" class="hover:bg-[#0A66C2]">
+				<LinkedInIcon class="size-4 md:size-6" />
+				LinkedIn
+			</SocialPill>
+			<SocialPill href="https://github.com/ldavidiaz" class="hover:bg-black">
+				<GithubIcon class="size-4 md:size-6 " />
+				GitHub
+			</SocialPill>
+			<SocialPill href="mailto:ldaviddiaz.dev@gmail.com" class="hover:bg-white/10">
+				<MailIcon class="size-4 md:size-6" />
+				ldaviddiaz.dev@gmail.com
+			</SocialPill>
+		</nav>
+	</SectionContainer>
+
+	<SectionContainer id="experience" class="py-10">
+		<h2 class="text-3xl font-semibold mb-6 flex gap-x-2 items-center">
+			<Briefcase class="size-7" />
+			Experience
+		</h2>
+		<Experience />
+	</SectionContainer>
+
+	<SectionContainer id="projects" class="py-10">
+		<h2 class="text-3xl font-semibold mb-6 flex gap-x-2 items-center">
+			<CodeIcon class="size-7" />
+			Projects
+			<span class="text-sm text-gray-400"> (Some of my work)</span>
+		</h2>
+		<Projects />
+	</SectionContainer>
+
+	<SectionContainer id="about" class="flex flex-col items-center justify-center w-full h-screen text-white">
+		<h2 class="text-3xl font-bold">About Me</h2>
+		<p class="mt-4 text-lg">I am a developer with a passion for creating amazing web applications.</p>
+		<p class="mt-2 text-lg">I love learning new technologies and improving my skills.</p>
+	</SectionContainer>
+
+</main>
 </Layout>

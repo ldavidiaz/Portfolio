@@ -1,22 +1,73 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import "../styles/global.css";
+// Supports weights 100-900
+import "@fontsource-variable/onest";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="flex flex-col items-center h-screen">
+    <Header />
+    <slot />
+	  <Footer/>
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+  :root {
+    color-scheme: light dark;
+  }
+  html {
+    font-family: system-ui, sans-serif;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+
+    font-family: "Onest Variable", sans-serif;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    scroll-behavior: smooth;
+    background: 
+    /* Gradiente circular más pequeño en el centro */
+    radial-gradient(
+    circle at center,
+    #1a237e 0%,      /* Azul índigo más suave en el centro */
+    #141b5de6 10%,   /* Transición a un azul menos intenso con transparencia */
+    #0a0e33 30%,     /* Azul más oscuro pero no tan contrastante */
+    #00000e 45%,     /* Transición hacia negro azulado */
+    #000 60%,        /* Negro completo */
+    #01000b 99%      /* Termina con negro azulado */
+  );
+  
+  /* Hace que el fondo se quede fijo */
+  background-attachment: fixed;
+  
+  /* Aseguramos que el gradiente cubra todo el viewport */
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  }
+  @media (prefers-reduced-motion: reduce) {
+	html {
+	  scroll-behavior: auto;
 	}
+  }
 </style>
