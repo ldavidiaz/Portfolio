@@ -12,6 +12,8 @@ import SassIcon from "../assets/icons/Sass.astro";
 
 import EurekaDivulgaImage from "../assets/img/projects/eurekadivulga.png";
 import MiAgendaImage from "../assets/img/projects/miagenda-ini.png";
+import Portfolioimage from "../assets/img/projects/portfolio.png";
+
 const TAGS = {
     ASTRO: {
         name: "Astro",
@@ -91,8 +93,8 @@ const PROJECTS = [
     title: "This portfolio",
     description: "My personal portfolio, built with Astro and Tailwind CSS.",
     link: "#",
-    github: "#",
-    image: "https://placehold.co/300x200",
+    github: "https://github.com/ldavidiaz/Portfolio",
+    image: Portfolioimage.src,
     tags: [TAGS.ASTRO, TAGS.JAVASCRIPT, TAGS.TAILWIND],
   },
 ];
@@ -116,7 +118,9 @@ const PROJECTS = [
             </ul>
             <img src={image} alt={`Screenshot of the project ${image}`} class="rounded-lg" loading="lazy" />
             <div class="flex gap-2">
-                <a href={link} class="text-gray-300 hover:text-white hover:underline">View Project</a>
+                {link && link !== "#" && (
+                    <a href={link} class="text-gray-500 hover:underline">View Project</a>
+                )}
                 {github && github !== "#" && (
                     <a href={github} class="text-gray-500 hover:underline">View Code</a>
                 )}
