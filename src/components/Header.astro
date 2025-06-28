@@ -1,13 +1,20 @@
+---
+const { lang } = Astro.props as { lang: 'en' | 'es' };
+import LangSelector from "./LangSelector.astro";
+import { listMenuHeader } from '../i18n/ui';
+
+const t = listMenuHeader[lang];
+---
 <header class="flex justify-center fixed top-0 z-10 bg-black/50 backdrop-blur-md  items-center p-4 w-full">
 
-  <nav class="flex flex-row gap-x-4 opacity-90">
-    <ul class="flex space-x-4 font-semibold text-white sm:text-lg md:text-xl ">
-        <li><a href="#top" class="hover:text-yellow-400">Home</a></li>
-        <li><a href="#experience" class="hover:text-yellow-400">Experience</a></li>
-        <li><a href="#projects" class="hover:text-yellow-400">Projects</a></li>
-        <li><a href="#about" class="hover:text-yellow-400">About</a></li>
-      <li><a href="#contact" class="hover:text-yellow-400">Contact</a></li>
+  <nav class="flex flex-row gap-x-10 opacity-90">
+    <ul class="flex space-x-4 items-center font-semibold text-white sm:text-lg md:text-xl ">
+        <li><a href="#top" class="hover:text-yellow-400">{t.home}</a></li>
+        <li><a href="#experience" class="hover:text-yellow-400">{t.experience}</a></li>
+        <li><a href="#projects" class="hover:text-yellow-400">{t.projects}</a></li>
+        <li><a href="#about" class="hover:text-yellow-400">{t.about}</a></li>
+      <li><a href="#contact" class="hover:text-yellow-400">{t.contact}</a></li>
     </ul>
+    <LangSelector lang={lang} />
   </nav>
-
 </header>

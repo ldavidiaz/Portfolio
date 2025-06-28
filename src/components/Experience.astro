@@ -1,24 +1,14 @@
 ---
+const { lang } = Astro.props as { lang: 'en' | 'es' };
 import ExperienceItem from "./ExperienceItem.astro";
-
-const EXPERIENCE = [
-  {
-    date: "October 2024 - Actually",
-    title: "WordPress Development",
-    description:
-      "I am currently working on a WordPress project for UMH. I am responsible for the development of the website, including the implementation of custom themes and plugins.",
-    link: "eurekadivulga.umh.es",
-  },
-  {
-    date: "March 2024",
-    title: "Internship at UMH - Computer Engineering Department",
-    description:
-      `Development of functions for hyperspectral image analysis using MATLAB.
-      The project involves the analysis of hyperspectral images for the detection of different types of plastic materials.  
-      `,
-    link: "#",
-  },
-];
+import { experiencesList } from "../i18n/ui"
+const EXPERIENCE = experiencesList.map((item) => ({
+    lang: lang,
+    date: item.date[lang],
+    title: item.title[lang],
+    description: item.description[lang],
+    link: item.link,
+  }));
 ---
 
 <ol class="relative border-s border-gray-200 ml-3">

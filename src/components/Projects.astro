@@ -1,130 +1,46 @@
 ---
-import WordPressIcon from "../assets/icons/WordPress.astro";
-import TailwindIcon from "../assets/icons/Tailwind.astro";
-import AstroIcon from "../assets/icons/AstroIcon.astro";
-import JavascriptIcon from "../assets/icons/JavaScript.astro";
-import PhpIcon from "../assets/icons/PHP.astro";
-import JavaIcon from "../assets/icons/Java.astro";
-import ReactIcon from "../assets/icons/React.astro";
-import BoostrapIcon from "../assets/icons/Boostrap.astro";
-import SassIcon from "../assets/icons/Sass.astro";
+const { lang } = Astro.props as { lang: 'es' | 'en' };
 
+import { projectsList, uiText } from "../i18n/ui";
+import type { Project } from '../i18n/ui.types';
+import { TAGS,  type TagKey } from "../assets/TagsList";
+import { IMAGES } from "../assets/ImagesList";
+// Obtienes los proyectos del idioma actual
+const projects = projectsList[lang];
 
-import EurekaDivulgaImage from "../assets/img/projects/eurekadivulga.png";
-import MiAgendaImage from "../assets/img/projects/miagenda-ini.png";
-import Portfolioimage from "../assets/img/projects/portfolio.png";
-
-const TAGS = {
-    ASTRO: {
-        name: "Astro",
-        class: "bg-black/70 text-white",
-        icon: AstroIcon,
-        size: "size-4",
-    },
-    JAVASCRIPT: {
-        name: "JavaScript",
-        class: "bg-black/80 text-white",
-        icon: JavascriptIcon,
-        size: "size-4",
-    },
-    PHP: {
-        name: "PHP",
-        class: "bg-[#4F5B93] text-white",
-        icon: PhpIcon,
-        size: "size-4",
-    },
-    WORDPRESS: {
-        name: "WordPress",
-        class: "bg-[#3858e9] text-white",
-        icon: WordPressIcon,
-        size: "size-4",
-    },
-    TAILWIND: {
-        name: "Tailwind CSS",
-        class: "bg-[#003159] text-white",
-        icon: TailwindIcon,
-        size: "size-4",
-    },
-    JAVA: {
-        name: "Java",
-        class: "bg-[#0a0a0a] text-[#F29111]",
-        icon: JavaIcon,
-        size: "size-4",
-    },
-    REACT: {
-        name: "React",
-        class: "bg-[#23272ff2] text-white",
-        icon: ReactIcon,
-        size: "size-4",
-    },
-    SASS: {
-        name: "Sass",
-        class: "bg-[#ffeaf5] text-black",
-        icon: SassIcon,
-        size: "size-4",
-    },
-    BOOSTRAP: {
-        name: "Bootstrap",
-        class: "bg-[#27193d] text-white",
-        icon: BoostrapIcon,
-        size: "size-4",
-    },
-
-}
-
-const PROJECTS = [
-  {
-    title: "Eureka Divulga - Universidad Miguel Hernández",
-    description: "Website for the Eureka Divulga project at UMH.",
-    link: "https://eurekadivulga.umh.es/",
-    github: "#",
-    image: EurekaDivulgaImage.src,
-    tags: [TAGS.WORDPRESS, TAGS.PHP, TAGS.JAVASCRIPT, TAGS.REACT, TAGS.SASS, TAGS.BOOSTRAP],
-  },
-  {
-    title: "Mi Agenda - A subject project",
-    description: "A simple desktop application made with Java using the GUI library Swing and GSON libary for data serialization/deserialization and storage.",
-    link: "#",
-    github: "#",
-    image: MiAgendaImage.src,
-    tags: [TAGS.JAVA],
-  },
-  {
-    title: "This portfolio",
-    description: "My personal portfolio, built with Astro and Tailwind CSS.",
-    link: "#",
-    github: "https://github.com/ldavidiaz/Portfolio",
-    image: Portfolioimage.src,
-    tags: [TAGS.ASTRO, TAGS.JAVASCRIPT, TAGS.TAILWIND],
-  },
-];
 ---
-
-{
-    PROJECTS.map(({title, description,link, github, tags, image}) => (
-        <div class="w-full flex flex-col gap-4 mb-12">
-            <h3 class="text-xl font-semibold text-yellow-300/90">{title}</h3>
-            <p >{description}</p>
-            <ul class="w-full md:w-[740px] flex gap-2 flex-row flex-wrap mb-1">
-                {tags.map( tag => (
-                    <li>
-                        <span class={`flex gap-x-2 rounded-full text-xs font-semibold py-2 px-4 ${tag.class}`}>
-
-                        <tag.icon class={`${tag.size}`}/>{tag.name}
-                        </span>
-                    </li>
-                ))
-                }
-            </ul>
-            <img src={image} alt={`Screenshot of the project ${image}`} class="rounded-lg" loading="lazy" />
-            <div class="flex gap-2">
-                {link && link !== "#" && (
-                    <a href={link} class="text-gray-500 hover:underline">View Project</a>
-                )}
-                {github && github !== "#" && (
-                    <a href={github} class="text-gray-500 hover:underline">View Code</a>
-                )}
-            </div>
-        </div>
-    ))
-}
+{projects?.map((project: Project) => {
+  return (
+    <div class="w-full flex flex-col gap-4 mb-12">
+      <h3 class="text-xl font-semibold text-yellow-300/90">{project.title}</h3>
+      <p>{project.description}</p>
+      <ul class="w-full md:w-[740px] flex gap-2 flex-row flex-wrap mb-1">
+        {project.tags.map((tagKey: TagKey) => {
+          const tag = TAGS[tagKey];
+          return (
+            <li>
+              <span class={`flex gap-x-2 rounded-full text-xs font-semibold py-2 px-4 ${tag.class}`}>
+                <tag.icon class={tag.size} />
+                {tag.name}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+      <img
+        src={IMAGES[project.image]}
+        alt={`Screenshot of the project ${project.title}`}
+        class="rounded-lg"
+        loading="lazy"
+      />
+      <div class="flex gap-2">
+        {project.link && project.link !== '#' && (
+          <a href={project.link} class="text-gray-300 hover:underline">{uiText.viewProject[lang]}</a>
+        )}
+        {project.github && project.github !== '#' && (
+          <a href={project.github} class="text-gray-300 hover:underline">{uiText.viewCode[lang]}</a>
+        )}
+      </div>
+    </div>
+  );
+})}

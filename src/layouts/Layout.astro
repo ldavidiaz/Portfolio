@@ -6,24 +6,94 @@ import "../styles/global.css";
 import "@fontsource-variable/onest";
 
 interface Props {
+  lang: string;
   title: string;
   description?: string;
 }
 
-const { title, description } = Astro.props;
+const { lang, title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', () => {
+        const selector = document.getElementById('language-selector');
+        if (!selector) return;
+
+        selector.addEventListener('change', (e) => {
+          const lang = e.target.value;
+          const currentPath = window.location.pathname;
+
+          // Extrae solo la parte después del idioma actual
+          const parts = currentPath.split('/').filter(Boolean); // ej: ['en', 'about']
+          const restOfPath = parts.length > 1 ? '/' + parts.slice(1).join('/') : '/';
+
+          if (lang === 'es') {
+            // Ir a raíz (sin prefijo) para español
+            window.location.href = restOfPath;
+          } else {
+            // Ir a /en/loquesea
+            window.location.href = `/${lang}${restOfPath}`;
+          }
+        });
+      });
+    </script>
+    <script is:inline>
+      function toggleLanguageMenu() {
+        const menu = document.getElementById('language-menu');
+        const arrow = document.getElementById('select-arrow');
+
+        const isHidden = menu.classList.toggle('hidden');
+
+        if (!isHidden) {          
+          arrow.classList.add('rotate-180');
+        } else {
+          arrow.classList.remove('rotate-180');
+        }
+      }
+
+      function changeLanguage(lang) {
+        const parts = location.pathname.split('/').filter(Boolean); // ['en', 'about']
+        const rest = parts[0] === 'en' || parts[0] === 'es' ? parts.slice(1) : parts;
+        const path = rest.length ? '/' + rest.join('/') : '/';
+
+        if (lang === 'es') {
+          window.location.href = path;
+        } else {
+          window.location.href = '/' + lang + path;
+        }
+      }
+    </script>
+    <script is:inline>
+      // Aquí detectamos clic fuera
+      document.addEventListener('click', function(event) {
+        const menu = document.getElementById('language-menu');
+        const button = document.getElementById('language-button');
+        const arrow = document.getElementById('select-arrow');
+
+        // Si el menú está visible y el clic NO fue en el menú ni en el botón:
+        if (!menu.classList.contains('hidden') &&
+            !menu.contains(event.target) &&
+            !button.contains(event.target)) {
+          
+          // Ocultamos el menú
+          menu.classList.add('hidden');
+          // Quitamos la rotación a la flecha
+          arrow.classList.remove('rotate-180');
+        }
+      });
+    </script>
+
   </head>
   <body class="flex flex-col items-center h-screen">
-    <Header />
+    <Header lang={lang}/>
     <slot />
 	  <Footer/>
   </body>
