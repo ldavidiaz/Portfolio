@@ -27,7 +27,7 @@ export const indexTexts: Record<Language, IndexTexts> = {
     metaTitle: 'Luis David Portfolio - Ingeniero/Desarrollador de Software | Web | Mobile',
     metaDescription: 'Luis David Diaz - Ingeniero/Desarrollador de Software, Web y Movil. Interesado en la tecnología e innovación',
     title: 'Bienvenido a mi portfolio!',
-    subtitle: 'Luis_David = [ "Desarrollador", "Ingeniero Informatico", "IA Enjoyer", "Café Lover" ]',
+    subtitle: 'Luis_David = [ "Desarrollador", "Ingeniero Informático", "IA Enjoyer", "Café Lover" ]',
     status: 'Listo para trabajar',
     titleSectionExperience: 'Experiencia',
     titleSectionProjects: 'Proyectos',
